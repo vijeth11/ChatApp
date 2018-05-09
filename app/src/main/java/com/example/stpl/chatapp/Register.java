@@ -42,6 +42,7 @@ public class Register extends AppCompatActivity {
                     //Toast.makeText(Register.this,Url,Toast.LENGTH_SHORT).show();
                     register(Url);
 
+
                 }
                 else
                 {
@@ -72,12 +73,13 @@ public class Register extends AppCompatActivity {
 
                             String count=obj.get("success").toString();
                             String message=obj.get("message").toString();
-                            Toast.makeText(Register.this,count,Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Register.this,count,Toast.LENGTH_SHORT).show();
                             if(count.equals("0"))
                                 Toast.makeText(Register.this,message,Toast.LENGTH_SHORT).show();
                             else {
                                 startActivity(new Intent(Register.this, MainActivity.class));
                                 Toast.makeText(Register.this,message,Toast.LENGTH_SHORT).show();
+                                finish();
                             }
 
                         } catch (JSONException e) {
