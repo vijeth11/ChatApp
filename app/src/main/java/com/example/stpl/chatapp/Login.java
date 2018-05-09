@@ -1,13 +1,16 @@
 package com.example.stpl.chatapp;
 
 import android.content.Intent;
+import android.os.Build;
 import android.service.carrier.CarrierService;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +34,13 @@ public class Login extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Login.this,MainActivity.class));
+                EditText edt =(EditText) findViewById(R.id.editText);
+                EditText edt1=(EditText) findViewById(R.id.editText2);
+                String Url ="https://seated-pin.000webhostapp.com/index.php?username="+edt.getText().toString()+"&password="+edt1.getText().toString();
+                //Toast.makeText(Login.this,url,Toast.LENGTH_SHORT).show();
+                login(Url);
+
+
             }
         });
         TextView txt=(TextView) findViewById(R.id.textView2);
@@ -44,34 +53,42 @@ public class Login extends AppCompatActivity {
        });
     }
 
-    public  void login(String Url)
+    private   void login( final String Url)
     {
+        //Toast.makeText(Login.this,Url,Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+            new Response.Listener<String>() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onResponse(String response) {
+                    //hiding the progressbar after completion
 
 
-                        try {
-                            //getting the whole json object from the response
-                            JSONObject obj = new JSONObject(response);
+                    // Toast.makeText(AddNewItem.this,JSON_URL,Toast.LENGTH_SHORT).show();
+                    try {
+                        //getting the whole json object from the response
+                        JSONObject obj = new JSONObject(response);
 
-                            //we have the array named hero inside the object
-                            //so here we are getting that json array
+                        String count=obj.get("count").toString();
+                        String message=obj.get("message").toString();
+                        //Toast.makeText(Login.this,count,Toast.LENGTH_SHORT).show();
+                        if(count.equals("0"))
+                            Toast.makeText(Login.this,message,Toast.LENGTH_SHORT).show();
+                        else
+                            startActivity(new Intent(Login.this,MainActivity.class));
 
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //displaying the error in toast if occurrs
+                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
         //creating a request queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
