@@ -1,5 +1,6 @@
 package com.example.stpl.chatapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -24,10 +25,12 @@ import org.json.JSONObject;
 
 public class Register extends AppCompatActivity {
 
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        progressDialog=new ProgressDialog(this);
         final CardView register = (CardView) findViewById(R.id.cardView1);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +61,8 @@ public class Register extends AppCompatActivity {
 
     public  void register(String Url)
     {
+        progressDialog.setMessage("Registering...");
+        progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Url,
                 new Response.Listener<String>() {
                     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -77,6 +82,7 @@ public class Register extends AppCompatActivity {
                             if(count.equals("0"))
                                 Toast.makeText(Register.this,message,Toast.LENGTH_SHORT).show();
                             else {
+                                progressDialog.hide();
                                 startActivity(new Intent(Register.this, MainActivity.class));
                                 Toast.makeText(Register.this,message,Toast.LENGTH_SHORT).show();
                                 finish();

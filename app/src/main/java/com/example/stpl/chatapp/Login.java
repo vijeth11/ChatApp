@@ -1,5 +1,6 @@
 package com.example.stpl.chatapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.service.carrier.CarrierService;
@@ -26,9 +27,11 @@ import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
 
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog=new ProgressDialog(this);
         setContentView(R.layout.activity_login);
         CardView submit= (CardView) findViewById(R.id.cardView);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +59,8 @@ public class Login extends AppCompatActivity {
     private   void login( final String Url)
     {
         //Toast.makeText(Login.this,Url,Toast.LENGTH_SHORT).show();
+        progressDialog.setMessage("Loging in...");
+        progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Url,
             new Response.Listener<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -76,7 +81,7 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this,message,Toast.LENGTH_SHORT).show();
                         else
                             startActivity(new Intent(Login.this,MainActivity.class));
-
+                        progressDialog.hide();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
