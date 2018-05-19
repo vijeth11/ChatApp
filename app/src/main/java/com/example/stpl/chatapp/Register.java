@@ -83,7 +83,7 @@ public class Register extends AppCompatActivity {
                                 Toast.makeText(Register.this,message,Toast.LENGTH_SHORT).show();
                             else {
                                 progressDialog.hide();
-                                startActivity(new Intent(Register.this, MainActivity.class));
+                                startActivity(new Intent(Register.this, Connection.class));
                                 Toast.makeText(Register.this,message,Toast.LENGTH_SHORT).show();
                                 finish();
                             }
