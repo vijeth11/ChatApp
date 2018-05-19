@@ -41,8 +41,8 @@ public class Login extends AppCompatActivity {
                 EditText edt1=(EditText) findViewById(R.id.editText2);
                 String Url ="https://seated-pin.000webhostapp.com/index.php?username="+edt.getText().toString()+"&password="+edt1.getText().toString();
                 //Toast.makeText(Login.this,url,Toast.LENGTH_SHORT).show();
-                //login(Url);
-                startActivity(new Intent(Login.this,Connection.class));
+                login(Url);
+                //startActivity(new Intent(Login.this,Connection.class));
 
             }
         });
