@@ -28,6 +28,7 @@ import org.json.JSONObject;
 public class Login extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
+    EditText edt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class Login extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText edt =(EditText) findViewById(R.id.editText);
+                edt =(EditText) findViewById(R.id.editText);
                 EditText edt1=(EditText) findViewById(R.id.editText2);
                 String Url ="https://seated-pin.000webhostapp.com/index.php?username="+edt.getText().toString()+"&password="+edt1.getText().toString();
                 //Toast.makeText(Login.this,url,Toast.LENGTH_SHORT).show();
@@ -80,7 +81,7 @@ public class Login extends AppCompatActivity {
                         if(count.equals("0"))
                             Toast.makeText(Login.this,message,Toast.LENGTH_SHORT).show();
                         else
-                            startActivity(new Intent(Login.this,Connection.class));
+                            startActivity(new Intent(Login.this,Connection.class).putExtra("name",edt.getText().toString()));
                         progressDialog.hide();
                     } catch (JSONException e) {
                         e.printStackTrace();

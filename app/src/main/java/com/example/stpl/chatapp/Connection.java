@@ -58,11 +58,11 @@ public class Connection extends AppCompatActivity implements SalutDataCallback,S
         //User icon
         Bitmap myIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_2);
         //User name
-        String myName = "Michael";
+        String myName = getIntent().getStringExtra("name");
 
         int yourId = 1;
-        Bitmap yourIcon = BitmapFactory.decodeResource(getResources(), R.drawable.face_1);
-        String yourName = "Emily";
+        Bitmap yourIcon = BitmapFactory.decodeResource(getResources(), R.drawable.sender_face);
+        String yourName = "Sender";
 
         me = new ChatUser(myId, myName, myIcon);
         you = new ChatUser(yourId, yourName, yourIcon);
@@ -144,7 +144,7 @@ public class Connection extends AppCompatActivity implements SalutDataCallback,S
            else
            {
                if(Host)
-                  send("bye");
+                  send("hello");
                else
                    send("hello");
                Sent_Once=true;
